@@ -1,28 +1,28 @@
 <html>
 <head><h2>Formulario de Registro</h2></head>
 <body>
-    <form>
-        Nombres: <input name="Nombres" size=30 maxlength=15> <br>
+    <form method="post" action="../PHP/Ejercicio10.php">
+        Nombres: <input name="nombre" size=30 maxlength=15> <br>
         <br>
-        Apellido: <input name="Apellido" size=30 maxlength=15> <br>
+        Apellido: <input name="apellido" size=30 maxlength=15> <br>
         <br>
-        Sexo: <input name="Sexo" type="radio" value="M" />Masculino 
-        <input name="Sexo" type="radio" value="F" />Femenino 
-        <input name="Sexo" type="radio" value="N" />No Binario
+        Sexo: <input name="sexo" type="radio" value="Masculino" />Masculino 
+        <input name="sexo" type="radio" value="Femenino" />Femenino 
+        <input name="sexo" type="radio" value="No binario" />No Binario
     <br>
     <br>
         Estado Civil:
     <select name="ecivil" id="ecivil">
-        <option value="S">Soltero</option>
-        <option value="C">Casado</option>
-        <option value="D">Divorciado</option>
+        <option value="Soltero">Soltero</option>
+        <option value="Casado">Casado</option>
+        <option value="Divorciado">Divorciado</option>
     </select>
     <br>
     <br>
     <input name="acepto" type="checkbox" /> Deseo recibir información de novedades y ofertas.
     <br>
     <br>
-    <input name="acepto" type="checkbox"/> Declaro haber leído y aceptar las condiciones generales del programa y la normativa sobre protección de datos
+    <input name="aceptoo" type="checkbox"/> Declaro haber leído y aceptar las condiciones generales del programa y la normativa sobre protección de datos
     <br>
     <br>
     <input type="submit" value="Enviar" />
