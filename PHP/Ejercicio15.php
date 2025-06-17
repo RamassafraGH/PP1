@@ -7,87 +7,68 @@
 </head>
 <body>
     <?php
-    
+class Sala {
+    private $nro;
+    private $cantidadButacas;
+    private $butacasOcupadas = 0;
 
-
-class Cine{
-private $salas = [];
-
-public function addSala(Sala $s){
- $this->salas[] = $s;
-}
-
-public function vender($cantidad, $nro){
- $sn = $this->salas[$nro - 1];
- try {
-    if ()
-    $sn -> ocuparButacas($cantidad);
- } catch (Exception $th) {
-    echo $th->getMessage();
- }
- 
-}
-
-public function mostrarOcupacion(){
-    echo "Las butacas ocupadas de la sala " .$s->getNro(). "son " .$s.getButacasOcupadas();
-}
-}
-class Sala{
-private $nro;
-private $cantidadButacas;
-private $butacasOcupadas = 0;
-
-
-public function ocuparButacas($cantidad){
-    if (($butacasOcupadas + $cantidad) > $cantidadButacas)
-    try {
-        throw new Exception ("La sala" .$this->nro. "esta ocupada")
-    } catch (Exception $th) {
-        echo "Ha habido una excepcion" .$th->getMessage();
+    public function __construct($nro, $cantidadButacas) {
+        $this->nro = $nro;
+        $this->cantidadButacas = $cantidadButacas;
     }
-    $this->ocuparButacas = $cantidad;
+
+    public function ocuparButacas($cantidad) {
+        if (($this->butacasOcupadas + $cantidad) > $this->cantidadButacas) {
+            throw new Exception("La sala " . $this->nro . " ya no tiene capacidad" . "<br>");
+        }
+        $this->butacasOcupadas += $cantidad;
+    }
+
+    public function getNro() { return $this->nro; }
+    public function getButacasOcupadas() { return $this->butacasOcupadas; }
 }
 
+class Cine {
+    private $salas = [];
 
-public function setNro($n){$this->$nro = $n;}
-public function getNro(){return $this->$nro;}
+    public function addSala(Sala $s) {
+        $this->salas[] = $s;
+    }
 
-public function setCantidadButacas($cb){$this->$cantidadButacas = $cb;}
-public function getCantidadButacas(){return $this->$cantidadButacas;}
+    public function vender($cantidad, $nro) {
+        if ($nro < 1 || $nro > count($this->salas)) return;
+        $sn = $this->salas[$nro - 1];
+        try {
+            $sn->ocuparButacas($cantidad);
+        } catch (Exception $th) {
+            echo $th->getMessage() . "\n";
+        }
+    }
 
-public function getButacasOcupadas(){return $this->$butacasOcupadas;}
+    public function mostrarOcupacion() {
+        foreach ($this->salas as $sala) {
+            echo "Sala " . $sala->getNro() . ": " . $sala->getButacasOcupadas() . " butacas ocupadas\n";
+        }
+    }
 }
 
 try {
     $cine = new Cine();
-    $sala1 = new Sala();
-    $sala1->setNro(1);
-    $sala1->setCantidadButacas(50);
-    $cine->addSala($sala1);
-
-    $sala2 = new Sala();
-    $sala2->setNro(2);
-    $sala2->setCantidadButacas(30);
-    $cine->addSala($sala2);
-
-    $sala3 = new Sala();
-    $sala3->setNro(3);
-    $sala3->setCantidadButacas(40);
-    $cine->addSala($sala3);
+    $cine->addSala(new Sala(1, 50));
+    $cine->addSala(new Sala(2, 30));
+    $cine->addSala(new Sala(3, 40));
 
     for ($i = 0; $i < 100; $i++) {
         $cantidad = rand(1, 2);
         $nroSala = rand(1, 3);
-
         $cine->vender($cantidad, $nroSala);
-        ocuparButacas($cantidad);
-    }
-$cine->mostrarOcupacion();
-
-    foreach ($i as $this->salas => $value) {
-        # code...
     }
 
-    ?>
+    echo "\nOcupación final de las salas:\n";
+    $cine->mostrarOcupacion();
+} catch (Exception $e) {
+    echo "Error general: " . $e->getMessage();
+}
+?>
 </body>
 </html>
