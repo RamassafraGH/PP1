@@ -11,6 +11,7 @@ class Sala {
     private $nro;
     private $cantidadButacas;
     private $butacasOcupadas = 0;
+    private $capacidadAlcanzada = false;
 
     public function __construct($nro, $cantidadButacas) {
         $this->nro = $nro;
@@ -19,9 +20,13 @@ class Sala {
 
     public function ocuparButacas($cantidad) {
         if (($this->butacasOcupadas + $cantidad) > $this->cantidadButacas) {
-            throw new Exception("La sala " . $this->nro . " ya no tiene capacidad" . "<br>");
+            if (!$this->capacidadAlcanzada) { 
+                $this->capacidadAlcanzada = true;
+                throw new Exception("La sala " . $this->nro . " ya no tiene capacidad" . "<br>");
+            }
+        } else {
+            $this->butacasOcupadas += $cantidad;
         }
-        $this->butacasOcupadas += $cantidad;
     }
 
     public function getNro() { return $this->nro; }
