@@ -1,0 +1,10 @@
+<html>
+<body>
+            {% for clave, datos in paises %}
+            <b>Pais:</b>{{ clave }} <br>
+            <b>Nombre:</b>{{ datos.nombre }} <br>
+            <b>Idioma:</b>{{ datos.lengua }} <br>
+            <b>Moneda:</b>{{ datos.moneda }} <br> <br>
+            {% endfor %}  
+</body>
+</html>
