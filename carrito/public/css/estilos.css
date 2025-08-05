@@ -1,0 +1,16 @@
+header {
+    background-color: #f5f5f5;
+    padding: 10px;
+    text-align: center;
+}
+
+.title {
+    font-size: 24px;
+    color: #333;
+}
+
+.btn-light {
+    background-color: #eee;
+    border: none;
+    padding: 5px 10px;
+}
