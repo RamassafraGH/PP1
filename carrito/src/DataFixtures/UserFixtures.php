@@ -9,13 +9,11 @@ class UserFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $hashedPassword = '$2y$13$3NM6cvgsbh/SHI6TKIace.NAnDNdlVZrKopru4KTtzYU3rfUcKe0m'; // Reemplazá con el hash real
-
         for ($i = 1; $i <= 5; $i++) {
             $user = new Usuario();
             $user->setEmail("usuario{$i}@gmail.com");
             $user->setNombre("Usuario{$i}");
-            $user->setPassword($hashedPassword);
+            $user->setPassword('$2y$13$AdKcNEHMd/T1jwxKaLR15.T9sWyzRe/owC8Im.5qMIGoASGJz6tzG');
             $manager->persist($user);
         }
 
