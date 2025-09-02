@@ -22,9 +22,8 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var list<string> The user roles
      */
-    #[ORM\Column]
-    private $roles = [];
-
+    #[ORM\Column(type: 'json')]
+    private array $roles = [];
     /**
      * @var string The hashed password
      */
@@ -66,8 +65,9 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getRoles(): array
     {
-    $roles[] = 'ROLE_USER';
-    return array_unique($roles);
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER';
+        return array_unique($roles);
     }
 
     /**
