@@ -13,7 +13,7 @@ class UserFixtures extends Fixture
             $user = new Usuario();
             $user->setEmail("usuario{$i}@gmail.com");
             $user->setNombre("Usuario{$i}");
-            $user->setPassword('$2y$13$AdKcNEHMd/T1jwxKaLR15.T9sWyzRe/owC8Im.5qMIGoASGJz6tzG');
+            $user->setPassword('$2y$13$PJXmF1BJWKURSyll3fL1i.RGyFeCxO6aOKaGHsVAt675qjsfa3hgq');
             $manager->persist($user);
         }
 

@@ -3,17 +3,17 @@
 {% block title %}Lista de Productos{% endblock %}
 
 {% block body %}
-    <div class="head">
-        <strong>Carrito de compras</strong>
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        <p>Email: {{ app.user.email }}</p>
-        {% endif %}
+    <header class="header">
+        <strong>Carrito de Compras</strong>
         <div style="float: right;">
-            <button class="boton">Ver orden</button>
-            <button class="boton">Salir</button>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <p>Email: {{ app.user.email }}</p>
+    {% endif %}
+            <button class="btn-ligth">Ver Orden</button>
+            <button class="btn-ligth">Salir</button>
         </div>
-    </div>
-
+    </header>
+<main>
     <h1>Lista de Productos</h1>
     <div class="productos">
         {% for producto in productos %}
@@ -28,6 +28,7 @@
             <p>No hay productos disponibles.</p>
         {% endfor %}
     </div>
+    </main>
 {% endblock %}
 
 
