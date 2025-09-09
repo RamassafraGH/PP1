@@ -3,10 +3,11 @@
 namespace App\Manager;
 
 use App\Repository\ProductoRepository;
+use App\Entity\Producto;
 
 class ProductoManager
 {
-    private ProductoRepository $productoRepository;
+    private $productoRepository;
 
     public function __construct(ProductoRepository $productoRepository)
     {
@@ -16,5 +17,10 @@ class ProductoManager
     public function getProductos(): array
     {
         return $this->productoRepository->findAll();
+    }
+
+    public function getProducto(int $id): ?Producto
+    {
+        return $this->productoRepository->find($id);
     }
 }

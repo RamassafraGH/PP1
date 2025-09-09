@@ -1,0 +1,20 @@
+<div style="background-color: #111; color: white; padding: 15px; display:flex; justify-content:space-between; align-items:center;">
+    
+    <div>
+        <strong>Carrito de Compras</strong>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <span style="margin-left: 15px;">Email: {{ app.user.email }}</span>
+        {% endif %}
+    </div>
+
+    <div>
+        <a href="#" 
+           style="color:black; text-decoration:none; background:#fff; padding:6px 12px; border-radius:5px; font-weight:bold; margin-right: 10px;">
+           Ver Orden
+        </a>
+        <a href="{{ path('app_logout') }}" 
+           style="color:black; text-decoration:none; background:#fff; padding:6px 12px; border-radius:5px; font-weight:bold;">
+           Salir
+        </a>
+    </div>
+</div>

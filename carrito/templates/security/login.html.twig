@@ -1,24 +1,18 @@
-{# templates/security/login.html.twig #}
 {% extends 'baselogin.html.twig' %}
 
 {% block body %}
-    <div class="login-container">
-        <h2>Iniciar sesión</h2>
-
-        {% if error %}
-            <div class="error-message">Usuario o contraseña incorrecta</div>
-        {% endif %}
-
-        <form action="{{ path('app_login') }}" method="post" class="login-form">
-            <div class="welcome-banner">¡Bienvenido al carrito de compras!</div>
-
-            <label for="username">Email:</label>
-            <input type="text" id="username" name="_username" value="{{ last_username }}" required />
-
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="_password" required />
-
-            <button type="submit">Login</button>
-        </form>
-    </div>
+<div class="login-container">
+    <h2>Iniciar sesión</h2>
+    {% if error %}
+        <div class="error-message">Usuario o contraseña incorrecta</div>
+    {% endif %}
+    <form action="{{ path('app_login') }}" method="post" class="login-form">
+        <div class="welcome-banner">¡Bienvenido al carrito de compras!</div>
+        <label for="username">Email:</label>
+        <input type="text" id="username" name="_username" value="{{ last_username }}" required />
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="_password" required />
+        <button type="submit">Login</button>
+    </form>
+</div>
 {% endblock %}
