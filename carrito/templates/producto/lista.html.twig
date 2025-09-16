@@ -5,6 +5,11 @@
 {% block body %}
 {% include 'header.html.twig' %}
 <main>
+{% for mensaje in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ mensaje }}
+    </div>
+    {% endfor %}
     <h1>Lista de Productos</h1>
     <div class="productos">
         {% for producto in productos %}

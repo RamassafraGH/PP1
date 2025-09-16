@@ -10,6 +10,16 @@
         <img src="{{ asset(producto.imagen) }}" alt="{{ producto.nombre }}" class="producto-imagen">
         <p><strong>Descripción:</strong> {{ producto.descripcion }}</p>
         <p><strong>Precio:</strong> ${{ producto.precio }}</p>
+        
+        <form action="{{ path('agregar_producto') }}" method="post">
+            <label for="cantidad">Cantidad:</label>
+            <input type="text" name="cantidad" id="cantidad" required>
+
+            <input type="hidden" name="idProducto" value="{{ producto.id }}">
+
+            <button type="submit">Agregar a la orden</button>
+        </form>
+
         <a href="{{ path('listar_productos') }}" class="boton-volver">← Volver a la lista</a>
     </div>
 {% endblock %}
