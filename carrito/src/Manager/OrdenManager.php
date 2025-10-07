@@ -1,5 +1,4 @@
 <?php
-// src/Manager/OrdenManager.php
 namespace App\Manager;
 
 use App\Entity\Orden;
@@ -28,21 +27,36 @@ class OrdenManager
 
     public function agregarProducto(int $idProducto, int $cantidad, Usuario $usuario): void
     {
+        // Validar cantidad
+        if ($cantidad <= 0) {
+            throw new \InvalidArgumentException("La cantidad debe ser mayor a 0");
+        }
 
+        // Obtener producto
+        $producto = $this->productoRepository->find($idProducto);
+        if (!$producto) {
+            throw new \Exception("Producto no encontrado");
+        }
+
+        // Obtener o crear orden
         $orden = $this->obtenerOrden($usuario);
 
+        // Crear nuevo ítem
         $item = new Item();
         $item->setProducto($producto);
         $item->setCantidad($cantidad);
         $item->setOrden($orden);
 
+        // Agregar ítem a la orden
         $orden->addItem($item);
 
+        // Setear estado si es nueva
         if ($orden->getEstado() === null) {
             $orden->setEstado('pendiente');
             $orden->setIniciada(new \DateTime());
         }
 
+        // Persistir
         $this->em->persist($item);
         $this->em->persist($orden);
         $this->em->flush();
