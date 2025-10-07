@@ -89,19 +89,20 @@ class Orden
     }
 
     public function addItem(Item $item): Item
-    {
-        foreach ($this->item as $existente) {
-            if ($existente->equals($item)) {
-                $existente->setCantidad($item->getCantidad());
-                return $existente;
-            }
+{
+    foreach ($this->item as $existente) {
+        if ($existente->getProducto()->getId() === $item->getProducto()->getId()) {
+            $existente->setCantidad($item->getCantidad());
+            return $existente;
         }
-    
-        $this->item->add($item);
-        $item->setOrden($this);
-    
-        return $item;
     }
+
+    // Si no existe, agregar nuevo ítem
+    $this->item->add($item);
+    $item->setOrden($this);
+
+    return $item;
+}
     
     public function removeItem(Item $item): static
     {
