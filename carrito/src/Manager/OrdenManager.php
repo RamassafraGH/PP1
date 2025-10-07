@@ -39,22 +39,24 @@ class OrdenManager
         }
 
         // Obtener o crear orden
+
         $orden = $this->obtenerOrden($usuario);
 
         // Crear nuevo ítem
         $item = new Item();
+
         $item->setProducto($producto);
         $item->setCantidad($cantidad);
+
         $item->setOrden($orden);
 
         // Agregar ítem a la orden
         $orden->addItem($item);
 
         // Setear estado si es nueva
-        if ($orden->getEstado() === null) {
-            $orden->setEstado('pendiente');
+            $orden->setEstado('Iniciada');
             $orden->setIniciada(new \DateTime());
-        }
+            $orden->setUsuario($usuario);
 
         // Persistir
         $this->em->persist($item);
@@ -66,18 +68,15 @@ class OrdenManager
     {
         $orden = $this->ordenRepository->findOneBy([
             'usuario' => $usuario,
-            'estado' => 'pendiente'
+            'estado' => 'Iniciada'
         ]);
 
-        if (!$orden) {
-            $orden = new Orden();
-            $orden->setUsuario($usuario);
-            $orden->setEstado('pendiente');
-            $orden->setIniciada(new \DateTime());
-            $this->em->persist($orden);
-            $this->em->flush();
+        if ($orden){
+            return $orden;
+        } else {
+            return new Orden();
+
         }
 
-        return $orden;
     }
 }
