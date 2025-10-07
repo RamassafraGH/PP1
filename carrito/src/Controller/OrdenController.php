@@ -19,5 +19,10 @@ class OrdenController extends AbstractController
         $this->addFlash('success', "Se ingresó a la orden, {$cantidad} unidades del producto {$idProducto}");
 
         return $this->redirectToRoute('listar_productos');
+
+    }
+
+    public function agregarItem(Request $request): Response{
+        
     }
 }
