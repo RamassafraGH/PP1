@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Resumen de la Orden{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/estilos.css') }}">
+{% endblock %}
+
+{% block body %}
+{% include 'header.html.twig' %}
+<h1>Resumen de la Orden</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Imagen</th>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio Unitario</th>
+            <th>Total del Ítem</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in orden.item %}
+            <tr>
+                <td><img src="{{ asset('images/' ~ item.producto.imagen) }}" alt="{{ item.producto.nombre }}" width="100"></td>
+                <td>{{ item.producto.nombre }}</td>
+                <td>{{ item.cantidad }}</td>
+                <td>${{ item.producto.precio }}</td>
+                <td>${{ item.getTotal() }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Total de la Orden: ${{ orden.getTotal() }}</h3>
+
+{% endblock %}

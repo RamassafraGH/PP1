@@ -40,7 +40,7 @@ class OrdenManager
 
         // Obtener o crear orden
 
-        $orden = $this->obtenerOrden($usuario);
+        $orden = $this->verOrden($usuario);
 
         // Crear nuevo ítem
         $item = new Item();
@@ -62,7 +62,7 @@ class OrdenManager
         $this->em->flush();
     }
 
-    private function obtenerOrden(Usuario $usuario): Orden
+    public function verOrden(Usuario $usuario): Orden
     {
         $orden = $this->ordenRepository->findOneBy([
             'usuario' => $usuario,

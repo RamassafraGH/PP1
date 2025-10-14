@@ -33,5 +33,16 @@ class OrdenController extends AbstractController
         }
 
         return $this->redirectToRoute('listar_productos');
+
     }
-}
+
+    #[Route('/orden/ver', name:'orden_ver')]
+    public function obtenerOrden (OrdenManager $ordenmanager): Response{
+
+        $usuario = $this->getUser();
+        $orden = $ordenmanager->verOrden($usuario);
+
+        return $this->render('orden/resumen.html.twig',[
+            'orden' => $orden]);
+        }
+    }

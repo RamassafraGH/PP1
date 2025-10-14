@@ -130,4 +130,12 @@ class Orden
     }
 
 
+    public function getTotal(): float {
+        $total = 0;
+        foreach ($this->item as $item) {
+            $total += $item->getTotal();
+        }
+        return $total;
+    }
+    
 }

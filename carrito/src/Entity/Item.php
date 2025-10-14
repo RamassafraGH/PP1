@@ -68,5 +68,11 @@ class Item
     public function equals(Item $item): bool{
         return $item->getProducto()->getId() === $item->getProducto()->getId(); 
         }
+
+    public function getTotal(): float {
+            return $this->cantidad * $this->producto->getPrecio();
     }
+            
+    }
+
 
