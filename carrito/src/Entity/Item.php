@@ -64,4 +64,9 @@ class Item
 
         return $this;
     }
-}
+
+    public function equals(Item $item): bool{
+        return $item->getProducto()->getId() === $item->getProducto()->getId(); 
+        }
+    }
+

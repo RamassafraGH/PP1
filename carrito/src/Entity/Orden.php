@@ -88,20 +88,21 @@ class Orden
         return $this->item;
     }
 
-    public function addItem(Item $item): Item
-{
+    public function addItem(Item $item): Item{
     foreach ($this->item as $existente) {
-        if ($existente->getProducto()->getId() === $item->getProducto()->getId()) {
+        if ($existente->equals($item)){
             $existente->setCantidad($item->getCantidad());
             return $existente;
         }
-    }
+        }
 
     // Si no existe, agregar nuevo ítem
     $this->item->add($item);
     $item->setOrden($this);
 
     return $item;
+
+    
 }
     
     public function removeItem(Item $item): static

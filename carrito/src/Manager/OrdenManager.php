@@ -50,16 +50,14 @@ class OrdenManager
 
         $item->setOrden($orden);
 
-        // Agregar ítem a la orden
-        $orden->addItem($item);
+        $itemActualizado = $orden->addItem($item);
 
-        // Setear estado si es nueva
             $orden->setEstado('Iniciada');
             $orden->setIniciada(new \DateTime());
             $orden->setUsuario($usuario);
 
         // Persistir
-        $this->em->persist($item);
+        $this->em->persist($itemActualizado);
         $this->em->persist($orden);
         $this->em->flush();
     }
