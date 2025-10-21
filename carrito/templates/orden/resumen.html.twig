@@ -1,37 +1,136 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Resumen de la Orden{% endblock %}
-{% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/estilos.css') }}">
-{% endblock %}
-
 {% block body %}
 {% include 'header.html.twig' %}
-<h1>Resumen de la Orden</h1>
-<table>
-    <thead>
-        <tr>
-            <th>Imagen</th>
-            <th>Producto</th>
-            <th>Cantidad</th>
-            <th>Precio Unitario</th>
-            <th>Total del Ítem</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for item in orden.item %}
-            <tr>
-                <td><img src="{{ asset('images/' ~ item.producto.imagen) }}" alt="{{ item.producto.nombre }}" width="100"></td>
-                <td>{{ item.producto.nombre }}</td>
-                <td>{{ item.cantidad }}</td>
-                <td>${{ item.producto.precio }}</td>
-                <td>${{ item.getTotal() }}</td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
 
-<h3>Total de la Orden: ${{ orden.getTotal() }}</h3>
+<style>
+    .contenedor-orden {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 20px;
+        margin-top: 20px;
+    }
 
+    .tabla-orden,
+    .tabla-resumen {
+        border-collapse: collapse;
+        font-family: Arial, sans-serif;
+    }
+
+    .tabla-orden {
+        width: 100%; /* ahora ocupa todo el ancho */
+    }
+
+    .tabla-resumen {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .tabla-orden th,
+    .tabla-resumen th {
+        background-color: white;
+        color: black;
+        text-align: center;
+        border: none;
+    }
+
+    .tabla-orden td,
+    .tabla-resumen td {
+        padding: 10px;
+        text-align: center;
+        border: none;
+    }
+
+    img {
+        max-width: 80px;
+        height: auto;
+    }
+
+    .confirmar-compra {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .confirmar-compra button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color:rgb(0, 0, 0);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .confirmar-compra button:hover {
+        background-color: #45a049;
+    }
+
+    .btn-eliminar {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+    .btn-eliminar:hover {
+        background-color: #c0392b;
+    }
+</style>
+
+<h1>Su Orden</h1>
+
+<div class="contenedor-orden">
+    <div style="width: 100%;">
+        <h2 style="background-color: #000; color: #fff; padding: 10px; margin-bottom: 10px;">Item</h2>
+        <table class="tabla-orden">
+            <thead>
+                <tr>
+                    <th>     </th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Total</th>
+                    <th>      </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in orden.item %}
+                    <tr>
+                        <td>
+                            <img src="{{ asset('public/images/' ~ item.producto.imagen) }}" alt="{{ item.producto.nombre }}">
+                        </td>
+                        <td>{{ item.producto.nombre }}</td>
+                        <td>{{ item.cantidad }}</td>
+                        <td>${{ item.producto.precio }}</td>
+                        <td>${{ item.getTotal() }}</td>
+                        <td><button>Eliminar</button></td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">No hay productos en la orden.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div style="width: 30%;">
+        <h2 style="background-color: #000; color: #fff; padding: 10px; margin-bottom: 10px;">Resumen</h2>
+        <table class="tabla-resumen">
+            <tbody>
+                <tr>
+                    <th>Total de la compra</th>
+                    <td>${{ orden.getTotal() }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="confirmar-compra">
+            <form method="post" action="{{ path('finalizar_compra') }}">
+                <button type="submit">Confirmar Compra</button>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

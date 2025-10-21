@@ -88,34 +88,30 @@ class Orden
         return $this->item;
     }
 
-    public function addItem(Item $item): Item{
-    foreach ($this->item as $existente) {
-        if ($existente->equals($item)){
-            $existente->setCantidad($item->getCantidad());
-            return $existente;
-        }
-        }
-
-    // Si no existe, agregar nuevo ítem
-    $this->item->add($item);
-    $item->setOrden($this);
-
-    return $item;
-
-    
-}
-    
-    public function removeItem(Item $item): static
+    public function addItem(Item $item): Item
     {
-        if ($this->item->removeElement($item)) {
-            // set the owning side to null (unless already changed)
-            if ($item->getOrden() === $this) {
-                $item->setOrden(null);
+        foreach ($this->item as $existente) {
+            if ($existente->getProducto()->getId() === $item->getProducto()->getId()) {
+                $existente->setCantidad($existente->getCantidad() + $item->getCantidad());
+                return $existente;
             }
         }
-
-        return $this;
+    
+        $this->item->add($item);
+        $item->setOrden($this);
+    
+        return $item;
     }
+    
+
+public function removeItem(Item $item): void
+{
+    if ($this->items->contains($item)) {
+        $this->items->removeElement($item);
+        $item->setOrden(null);
+    }
+}
+
 
     public function getUsuario(): ?Usuario
     {

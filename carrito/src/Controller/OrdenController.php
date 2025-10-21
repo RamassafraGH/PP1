@@ -44,5 +44,22 @@ class OrdenController extends AbstractController
 
         return $this->render('orden/resumen.html.twig',[
             'orden' => $orden]);
+    } 
+
+
+    #[Route('/orden/finalizar', name: 'finalizar_compra', methods: ['POST'])]
+    public function finalizarCompra(): Response
+    {
+        $usuario = $this->getUser();
+
+        try {
+            $this->ordenManager->finalizarCompra($usuario);
+            $this->addFlash('success', '¡Compra finalizada con éxito!');
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'Error al finalizar la compra: ' . $e->getMessage());
         }
+
+        return $this->redirectToRoute('listar_productos');
     }
+
+        }

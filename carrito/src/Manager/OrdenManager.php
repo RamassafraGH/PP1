@@ -26,41 +26,41 @@ class OrdenManager
     }
 
     public function agregarProducto(int $idProducto, int $cantidad, Usuario $usuario): void
-    {
-        // Validar cantidad
-        if ($cantidad <= 0) {
-            throw new \InvalidArgumentException("La cantidad debe ser mayor a 0");
-        }
-
-        // Obtener producto
-        $producto = $this->productoRepository->find($idProducto);
-        if (!$producto) {
-            throw new \Exception("Producto no encontrado");
-        }
-
-        // Obtener o crear orden
-
-        $orden = $this->verOrden($usuario);
-
-        // Crear nuevo ítem
-        $item = new Item();
-
-        $item->setProducto($producto);
-        $item->setCantidad($cantidad);
-
-        $item->setOrden($orden);
-
-        $itemActualizado = $orden->addItem($item);
-
-            $orden->setEstado('Iniciada');
-            $orden->setIniciada(new \DateTime());
-            $orden->setUsuario($usuario);
-
-        // Persistir
-        $this->em->persist($itemActualizado);
-        $this->em->persist($orden);
-        $this->em->flush();
+{
+    if ($cantidad <= 0) {
+        throw new \InvalidArgumentException("La cantidad debe ser mayor a 0");
     }
+
+    $producto = $this->productoRepository->find($idProducto);
+    if (!$producto) {
+        throw new \Exception("Producto no encontrado");
+    }
+
+    $orden = $this->verOrden($usuario);
+
+    foreach ($orden->getItem() as $itemExistente) {
+        if ($itemExistente->getProducto()->getId() === $producto->getId()) {
+            $itemExistente->setCantidad($itemExistente->getCantidad() + $cantidad);
+            $this->em->persist($itemExistente);
+            $this->em->flush();
+            return;
+        }
+    }
+
+    $item = new Item();
+    $item->setProducto($producto);
+    $item->setCantidad($cantidad);
+    $item->setOrden($orden);
+
+    $orden->addItem($item);
+    $orden->setEstado('Iniciada');
+    $orden->setIniciada(new \DateTime());
+    $orden->setUsuario($usuario);
+
+    $this->em->persist($item);
+    $this->em->persist($orden);
+    $this->em->flush();
+}
 
     public function verOrden(Usuario $usuario): Orden
     {
@@ -77,4 +77,23 @@ class OrdenManager
         }
 
     }
+
+
+    public function finalizarCompra(Usuario $usuario): void
+{
+    $orden = $this->ordenRepository->findOneBy([
+        'usuario' => $usuario,
+        'estado' => 'Iniciada'
+    ]);
+
+    if (!$orden) {
+        throw new \Exception("No hay una orden iniciada para finalizar.");
+    }
+
+    $orden->setEstado('Finalizada');
+    $orden->setConfirmada(new \DateTime());
+
+    $this->em->persist($orden);
+    $this->em->flush();
+}
 }
